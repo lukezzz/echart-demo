@@ -1,3 +1,4 @@
+
 const {
     override,
     fixBabelImports,
@@ -63,15 +64,15 @@ module.exports = override(
 
     addLessLoader({
         javascriptEnabled: true,
-        //   modifyVars: {
-        // '@primary-color': '#1da57a',
-        // '@font-size-base': '13px',
-        // '@layout-header-background': '#fafafa',
-        // '@menu-bg': '#fafafa',
-        // '@layout-slider-background': '#f0f0f0',
-        // '@layout-body-background': '#ffffff',
-        // '@layout-trigger-background': '#7c7c7c',
-        //   },
+        modifyVars: {
+            // '@primary-color': '#1da57a',
+            '@font-size-base': '12px',
+            // '@layout-header-background': '#fafafa',
+            // '@menu-bg': '#fafafa',
+            // '@layout-slider-background': '#f0f0f0',
+            // '@layout-body-background': '#ffffff',
+            // '@layout-trigger-background': '#7c7c7c',
+        },
     }),
 
     // when adding alias, also it need to config vscode, jest and eslint:
@@ -79,11 +80,11 @@ module.exports = override(
     //  jest --> package.json
     //  eslint --> .eslintrc.js
     //  storybook --> .storybook/main.js
-    // addWebpackAlias({
-    //   '@': path.resolve(__dirname, './src'),
-    //   '@js': path.resolve(__dirname, './src/js'),
-    //   '@pages': path.resolve(__dirname, './src/pages'),
-    //   '@components': path.resolve(__dirname, './src/components'),
-    //   '@locales': path.resolve(__dirname, './src/locales/i18n'),
-    // }),
+    addWebpackAlias({
+        '@': path.resolve(__dirname, './src'),
+        '@js': path.resolve(__dirname, './src/js'),
+        '@pages': path.resolve(__dirname, './src/pages'),
+        '@components': path.resolve(__dirname, './src/components'),
+        '@locales': path.resolve(__dirname, './src/locales/i18n'),
+    }),
 );

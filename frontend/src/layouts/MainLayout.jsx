@@ -15,25 +15,34 @@ export const MainLayout = props => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <SideMenu />
-            <Layout className="site-layout">
-                <Header>
-                    <Row justify="space-between">
-                        <Col flex="200px">
-                            <div className='logo-title'>
-                                <span className='logo-title-platform'>Echart Demo</span>
-                            </div>
-                        </Col>
-                        <Col flex="84px">
-                            <Toolbar />
-                        </Col>
-                    </Row>
-                </Header>
-                <Content style={{ padding: '0 24px', marginTop: 24 }}>
-                    {children}
-                </Content>
-                <MainFooter />
+            <Header style={{ padding: '0 20px' }}>
+                <Row justify="space-between">
+                    <Col flex="200px">
+                        <div className='logo-title'>
+                            <span className='logo-title-platform'>Echart Demo</span>
+                        </div>
+                    </Col>
+                    <Col flex="84px">
+                        <Toolbar />
+                    </Col>
+                </Row>
+            </Header>
+            <Layout>
+                <SideMenu />
+                <Layout
+                    style={{
+                        padding: '0 0 24px 24px',
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}
+                >
+
+                    <Content style={{ padding: '0 24px', marginTop: 24 }}>
+                        {children}
+                    </Content>
+                </Layout>
             </Layout>
+            <MainFooter />
         </Layout>
     )
 }

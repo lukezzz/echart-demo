@@ -10,9 +10,11 @@
     "@types/react": "^17.0.2",
     "antd": "^4.13.0",
     "echarts-for-react": "^3.0.1",
+    "i18next": "^19.9.1",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
