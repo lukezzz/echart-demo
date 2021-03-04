@@ -6,20 +6,12 @@ import {
 
 const routeData = [
     {
-        name: 'home',
-        key: 1,
-        path: '/',
-        authority: [''],
-        title: 'Styles',
-        icon: <BgColorsOutlined />,
-        sub: []
-    },
-    {
         name: 'echart',
         key: 2,
         path: '/echart',
         authority: [''],
         title: 'Echart',
+        exact: false,
         icon: <PieChartOutlined />,
         sub: [
             {
@@ -28,9 +20,20 @@ const routeData = [
                 path: '/echart/chart1',
                 authority: [''],
                 title: 'Chart1',
+                exact: false,
                 icon: <PieChartOutlined />,
             }
         ]
+    },
+    {
+        name: 'home',
+        key: 1,
+        path: '/',
+        authority: [''],
+        title: 'Styles',
+        icon: <BgColorsOutlined />,
+        exact: false,
+        sub: []
     }
 ]
 
