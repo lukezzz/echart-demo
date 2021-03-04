@@ -5988,6 +5988,13 @@ human-signals@^1.1.1:
   resolved "https://registry.npm.taobao.org/human-signals/download/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha1-xbHNFPUK6uCatsWf5jujOV/k36M=
 
+i18next-browser-languagedetector@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-6.0.1.tgz#83654bc87302be2a6a5a75146ffea97b4ca268cf"
+  integrity sha1-g2VLyHMCvipqWnUUb/6pe0yiaM8=
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+
 i18next@^19.9.1:
   version "19.9.1"
   resolved "https://registry.npm.taobao.org/i18next/download/i18next-19.9.1.tgz#7a072b75daf677aa51fd4ce55214f21702af3ffd"

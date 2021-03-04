@@ -1,13 +1,16 @@
+import React, { useContext } from 'react'
+
 import Routes from './Routes';
 import './App.module.less';
-import enUS from 'antd/lib/locale/en_US';
-import zhCN from 'antd/lib/locale/zh_CN';
 import { ConfigProvider } from 'antd';
+import { LocaleContext } from './providers/config/Locale.provider'
 
+const App = () => {
 
-function App() {
+  const { locale } = useContext(LocaleContext)
+
   return (
-    <ConfigProvider locale={enUS}>
+    <ConfigProvider locale={locale}>
       <Routes />
     </ConfigProvider>
   );

@@ -3,13 +3,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import './i18n';
+import './translations/i18n';
+import LocaleProvider from './providers/config/Locale.provider'
 
 
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <LocaleProvider>
+            <App />
+        </LocaleProvider>
     </BrowserRouter>,
     document.getElementById('root'));
 

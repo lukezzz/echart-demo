@@ -17,7 +17,7 @@ const { RangePicker } = DatePicker;
 
 export const Home = () => {
 
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     return (
 
@@ -45,7 +45,7 @@ export const Home = () => {
                 </Col>
                 <Col span={6}>
                     <Card size="small" title="Pagination">
-                        <Pagination defaultCurrent={1} total={50} />
+                        <Pagination defaultCurrent={1} total={50} showSizeChanger />
                     </Card>
                 </Col>
                 <Col span={6}>

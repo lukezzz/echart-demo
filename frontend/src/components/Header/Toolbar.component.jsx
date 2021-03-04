@@ -1,10 +1,16 @@
-import React, { memo } from 'react';
-import { Dropdown, Menu, Button, Space, Switch } from 'antd';
+import React, { memo, useContext } from 'react';
+import { Dropdown, Menu, Button, Space } from 'antd';
 
 import dark from 'antd/dist/dark-theme';
 import light from 'antd/dist/compact-theme';
 
-import i18n from '../../i18n'
+import i18n from '../../translations/i18n'
+import { useTranslation } from 'react-i18next';
+
+import { LocaleContext } from '../../providers/config/Locale.provider'
+
+import enUS from 'antd/lib/locale/en_US';
+import zhCN from 'antd/lib/locale/zh_CN';
 
 const ThemeMenu = () => {
 
@@ -32,25 +38,48 @@ const ThemeMenu = () => {
   )
 }
 
-const changeLan = checked => {
-  if (checked) {
-    i18n.changeLanguage('zh')
-  } else {
-    i18n.changeLanguage('en')
-  }
-}
+
+
+
 
 const Toolbar = () => {
 
+  const { t } = useTranslation();
+
+  const { changeLocale } = useContext(LocaleContext)
+
+  const changeLan = e => {
+    i18n.changeLanguage(e.key)
+    switch (e.key) {
+      case 'en':
+        changeLocale(enUS)
+        break;
+
+      default:
+        changeLocale(zhCN)
+        break;
+    }
+  }
+
+
+  const LangMenu = () => {
+
+
+    return (
+      <Menu selectedKeys={[]} onClick={changeLan}>
+        <Menu.Item key="en">English</Menu.Item>
+        <Menu.Item key="zh">中文</Menu.Item>
+      </Menu>
+    )
+  }
+
   return (
     <Space>
-      <Switch
-        checkedChildren="中文"
-        unCheckedChildren="EN"
-        defaultChecked={false}
-        onChange={changeLan} />
+      <Dropdown overlay={LangMenu()} trigger={['click']}>
+        <Button>{t("language")}</Button>
+      </Dropdown>
       <Dropdown overlay={ThemeMenu} trigger={['click']}>
-        <Button>Theme</Button>
+        <Button>{t("theme")}</Button>
       </Dropdown>
     </Space>
   )
