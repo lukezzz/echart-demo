@@ -6,31 +6,74 @@ import {
 
 } from 'antd'
 
-import ReactECharts from 'echarts-for-react';
+import { BarChart } from '../../components/Chart/Bar.chart'
+
+const data = {
+    'Matcha Latte': [
+        {
+            name: '2015',
+            value: 89.3
+        },
+        {
+            name: '2016',
+            value: 95.8
+        },
+        {
+            name: '2017',
+            value: 97.7
+        },
+    ],
+    'Milk Tea': [
+        {
+            name: '2015',
+            value: 92.1
+        },
+        {
+            name: '2016',
+            value: 89.4
+        },
+        {
+            name: '2017',
+            value: 83.1
+        },
+    ],
+    'Cheese Cocoa': [
+        {
+            name: '2015',
+            value: 94.4
+        },
+        {
+            name: '2016',
+            value: 91.2
+        },
+        {
+            name: '2017',
+            value: 92.5
+        },
+    ],
+    'Walnut Brownie': [
+        {
+            name: '2015',
+            value: 85.4
+        },
+        {
+            name: '2016',
+            value: 76.9
+        },
+        {
+            name: '2017',
+            value: 78.1
+        },
+    ],
+
+}
+
 
 
 export const Chart1 = () => {
 
-    const options = {
-        grid: { top: 8, right: 8, bottom: 24, left: 36 },
-        xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        },
-        yAxis: {
-            type: 'value',
-        },
-        series: [
-            {
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line',
-                smooth: true,
-            },
-        ],
-        tooltip: {
-            trigger: 'axis',
-        },
-    };
+
+
 
     return (
 
@@ -38,7 +81,9 @@ export const Chart1 = () => {
             <Row gutter={[12, 12]}>
                 <Col span={12}>
                     <Card size="small" title="Chart1">
-                        <ReactECharts option={options} />
+                        <BarChart
+                            data={data}
+                        />
                     </Card>
                 </Col>
             </Row>
