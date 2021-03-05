@@ -31,13 +31,12 @@ export const MainLayout = props => {
                 <SideMenu />
                 <Layout
                     style={{
-                        padding: '0 0 24px 24px',
                         display: 'flex',
                         flexDirection: 'column'
                     }}
                 >
 
-                    <Content style={{ padding: '0 24px', marginTop: 24 }}>
+                    <Content style={{ marginTop: 24 }}>
                         {children}
                     </Content>
                 </Layout>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import * as echarts from "echarts";
 
 const chartInitOpt = {
@@ -9,10 +9,13 @@ const chartInitOpt = {
     yAxis: {},
     series: []
 }
-export const BasicChart = ({ chartRef, data }) => {
+export const BasicChart = ({ chartRef, data, config, isLoading }) => {
     // const [config, setConfig] = useState(chartInitOpt)
 
     // const chartRef = useRef(null);
+
+    const { smooth } = config
+    console.log(isLoading)
 
 
     let chartInstance = null;
@@ -24,13 +27,20 @@ export const BasicChart = ({ chartRef, data }) => {
             chartInstance = renderedInstance;
         } else {
             chartInstance = echarts.init(chartRef.current);
+            window.addEventListener("resize", handleResize);
         }
-        chartInstance.setOption(options);
+        if (isLoading) {
+            chartInstance.showLoading()
+        } else {
+            chartInstance.hideLoading()
+            chartInstance.setOption(options);
+        }
 
 
         chartInstance.on("click", function (params) {
             console.log("params：", params);
         });
+
     }
 
     const handleResize = () => {
@@ -38,10 +48,8 @@ export const BasicChart = ({ chartRef, data }) => {
         chartInstance.resize()
     };
 
-    useEffect(() => {
-        console.log("chart option updated", data);
+    const configOption = options => {
 
-        let options = chartInitOpt
         options.xAxis = {
             data: data.category
         }
@@ -53,30 +61,47 @@ export const BasicChart = ({ chartRef, data }) => {
                 type: 'line',
                 // stack: '总量',
                 // areaStyle: { normal: {} },
-                // smooth: false,
+                smooth: smooth,
                 data: data.data[key]
             })
         })
 
         options.series = series
-
-
-        renderChart(options);
-        window.addEventListener("resize", handleResize);
-
-    }, [data]);
+    }
 
     useEffect(() => {
+        console.log("chart option updated", data);
+
+        if (chartInstance) {
+            handleResize()
+        }
+
+        let options = chartInitOpt
+        if (!isLoading) {
+            configOption(options)
+        }
+
+        renderChart(options);
+
         return () => {
             console.log("chart disposed");
             chartInstance && chartInstance.dispose();
             window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+        }
+
+
+    }, [data, isLoading]);
+
+    // useEffect(() => {
+    //     handleResize()
+    //     return () => {
+    //         console.log("chart disposed");
+    //         chartInstance && chartInstance.dispose();
+    //         window.removeEventListener("resize", handleResize);
+    //     };
+    // }, []);
 
     return (
-        <div>
-            <div style={{ height: "250px" }} ref={chartRef} />
-        </div>
+        <div style={{ height: "250px" }} ref={chartRef} />
     )
 }

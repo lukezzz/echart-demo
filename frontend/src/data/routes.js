@@ -1,7 +1,7 @@
 import {
-    HomeOutlined,
+    LineChartOutlined,
     BgColorsOutlined,
-    PieChartOutlined,
+    DashboardOutlined,
 } from '@ant-design/icons'
 
 const routeData = [
@@ -12,16 +12,16 @@ const routeData = [
         authority: [''],
         title: 'Echart',
         exact: false,
-        icon: <PieChartOutlined />,
+        icon: <DashboardOutlined />,
         sub: [
             {
-                name: 'chart1',
+                name: 'line',
                 key: 3,
-                path: '/echart/chart1',
+                path: '/echart/line',
                 authority: [''],
-                title: 'Chart1',
+                title: 'Line',
                 exact: false,
-                icon: <PieChartOutlined />,
+                icon: <LineChartOutlined />,
             }
         ]
     },

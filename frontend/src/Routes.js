@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
-import routeData from './Routes.map'
+import routeData from './data/routes'
 import SecurityLayout from './layouts/SecurityLayout';
 
 
@@ -10,11 +10,10 @@ import {
 } from './pages';
 
 const loadComponent = name => {
-  console.log(name)
   switch (name) {
     case 'home':
       return <Home />
-    case 'chart1':
+    case 'line':
       return <LineChartContainer />
 
     default:

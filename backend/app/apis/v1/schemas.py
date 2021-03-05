@@ -26,3 +26,9 @@ def users_schema(items, current, prev, next, pagination):
         'next': next,
         'count': pagination.total
     }
+
+def line_schema(category, data):
+    return {
+        'category': category,
+        'data': data,
+    }

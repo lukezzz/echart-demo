@@ -2,7 +2,7 @@ import { Layout, Menu, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import routeData from '../../Routes.map'
+import routeData from '../../data/routes'
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -59,7 +59,8 @@ export const SideMenu = () => {
             } */}
             <Menu
                 mode="inline"
-                defaultSelectedKeys={['4']}
+                // defaultSelectedKeys={['1']}
+                defaultOpenKeys={['2']}
                 style={{ height: '100%', borderRight: 0 }}
             >
                 {
@@ -73,7 +74,7 @@ export const SideMenu = () => {
                             </Menu.Item>
                             :
                             <SubMenu
-                                key="sub1"
+                                key={menu.key}
                                 icon={menu.icon}
                                 title={menu.title}>
                                 {

@@ -2,7 +2,7 @@ from flask import jsonify, request
 from flask_restful import Resource
 from app.apis.v1 import api_v1
 from flask_jwt_extended import jwt_required
-
+from app.apis.v1.schemas import *
 
 import time
 from datetime import datetime, timedelta
@@ -51,58 +51,46 @@ def fake_timeline():
     return temp_list
 
 
-def fake_category_agg():
-    temp_list = []
-    reason_code = ['code-execution', 'info-leak', 'dos', 'sql-injection']
-    for i in reason_code:
-        temp_list.append({'name': i, 'value': random.randint(10, 300)})
+def random_x_data():
+    temp_list = {
+        1: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        2: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+        3: ['周一', '周二', '周三', '周四', '周五'],
+        4: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    }
+    return temp_list[random.randint(1, 4)]
 
-    return temp_list
+def random_category():
+    temp_list = {
+        1: ['邮件营销', '联盟广告', '视频广告'],
+        2: ['销量'],
+    }
+    return temp_list[random.randint(1, 2)]
 
+def random_data(x_data, category):
+    d_length = len(x_data)
+    data = {}
+    
+    for i in category:
+        data[i] = random.sample(range(30, 1000), d_length)
 
-def fake_category_detail():
-    temp_list = []
-    reason_code = ['邮件营销', '联盟广告', '视频广告']
-    for i in reason_code:
-        temp_list.append({'name': i, 'value': random.randint(10, 300)})
+    return data
 
-    return temp_list
+class LineChart(Resource):
 
+    def get(self):
 
-class BasicChart(Resource):
-
-    def get(self, chart_type):
-
-        x_data = []
-        data = {}
-        if 'type1' in chart_type:
-            x_data = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            data = {
-                '邮件营销': [120, 132, 101, 134, 90, 230, 210],
-                '联盟广告': [111, 182, 191, 234, 290, 330, 310],
-                '视频广告': [150, 232, 201, 154, 190, 330, 410]
-            }
-        if 'type2' in chart_type:
-            x_data = ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-            data = {
-                '销量': [88, 20, 99, 10, 10, 20]
-            }
-        if 'type3' in chart_type:
-            x_data = ['周一', '周二', '周三', '周四', '周五']
-            data = {
-                '邮件营销': [120, 132, 101, 666, 90],
-                '联盟广告': [333, 777, 191, 234, 290],
-                '视频广告': [111, 232, 201, 154, 190]
-            }
-
-        time.sleep(random.randint(3, 5))
-        return jsonify({
-            'category': x_data,
-            'data': data
-        })
-
+        # xAxis data
+        x_data = random_x_data()
+        # dataset
+        category = random_category()
+        data = random_data(x_data, category)
+        
+        # time.sleep(random.randint(0, 2))
+        time.sleep(3)
+        return line_schema(x_data, data)
 
 # index
 api_v1.add_resource(Index, '/')
 api_v1.add_resource(HealthCheck, '/hc')
-api_v1.add_resource(BasicChart, '/chart/basic/<string:chart_type>')
+api_v1.add_resource(LineChart, '/chart/line')
