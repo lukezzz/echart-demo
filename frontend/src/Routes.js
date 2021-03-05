@@ -6,7 +6,7 @@ import SecurityLayout from './layouts/SecurityLayout';
 
 import {
   Home,
-  Chart1
+  LineChartContainer
 } from './pages';
 
 const loadComponent = name => {
@@ -15,7 +15,7 @@ const loadComponent = name => {
     case 'home':
       return <Home />
     case 'chart1':
-      return <Chart1 />
+      return <LineChartContainer />
 
     default:
       return <Home />

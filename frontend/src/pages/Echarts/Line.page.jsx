@@ -2,13 +2,14 @@ import {
     Row,
     Col,
     Card,
-    Spin
+    Button
 } from 'antd'
-import BasicChart from '../../components/Chart/Basic.chart'
-// import useBar from '../../data/testchart'
+import { LineChart } from '../../components/Chart/Line.chart'
+import { useBar } from '../../data/testchart'
 // import ReactECharts from 'echarts-for-react'
-import React, { useRef } from 'react'
-
+import React, { useState, useEffect, useRef } from 'react'
+// import useECharts from '../../components/Chart/useECharts'
+import * as echarts from "echarts";
 
 const chartInitOpt = {
     grid: { top: 8, right: 8, bottom: 24, left: 50 },
@@ -215,7 +216,7 @@ const options2 = {
 }
 
 
-export const Chart1 = () => {
+export const LineChartContainer = () => {
 
     return (
 
@@ -223,12 +224,12 @@ export const Chart1 = () => {
             <Row gutter={[12, 12]}>
                 <Col span={12}>
                     <Card size="small" title="Chart1" >
-                        <BasicChart chartRef={useRef(null)} chartType='bar' />
+                        <LineChart chartType='type2' />
                     </Card>
                 </Col>
                 <Col span={12}>
                     <Card size="small" title="Chart2" >
-                        <BasicChart chartRef={useRef(null)} chartType='line' />
+                        <LineChart chartType='type3' />
                     </Card>
                 </Col>
             </Row>
