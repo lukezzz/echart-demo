@@ -1,5 +1,6 @@
 import React, { memo, useContext } from 'react';
 import { Dropdown, Menu, Button, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons'
 
 import dark from 'antd/dist/dark-theme';
 import light from 'antd/dist/compact-theme';
@@ -76,10 +77,10 @@ const Toolbar = () => {
   return (
     <Space>
       <Dropdown overlay={LangMenu()} trigger={['click']}>
-        <Button>{t("language")}</Button>
+        <Button>{t("language")} <DownOutlined /></Button>
       </Dropdown>
       <Dropdown overlay={ThemeMenu} trigger={['click']}>
-        <Button>{t("theme")}</Button>
+        <Button>{t("theme")} <DownOutlined /></Button>
       </Dropdown>
     </Space>
   )

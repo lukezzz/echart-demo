@@ -250,7 +250,7 @@ export const Home = () => {
                     </Card>
                 </Col>
                 <Col span={6}>
-                    <Card size="small" title="Draw">
+                    <Card size="small" title="Loading">
                         <Spin indicator={antIcon} />
                     </Card>
                 </Col>
