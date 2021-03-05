@@ -11,7 +11,7 @@ const chartInitOpt = {
 }
 
 export const useBar = (chartType) => {
-    const { data, error } = useSWR(`/chart/basic/${chartType}`, fetcher, { refreshInterval: 2000 });
+    const { data, error } = useSWR(`/chart/basic/${chartType}`, fetcher);
 
     // let options = chartInitOpt
     // if (data) {

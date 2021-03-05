@@ -18,6 +18,7 @@ export const BasicChart = ({ chartRef, data }) => {
     let chartInstance = null;
 
     const renderChart = (options) => {
+        console.log("chart render", chartRef.current)
         const renderedInstance = echarts.getInstanceByDom(chartRef.current);
         if (renderedInstance) {
             chartInstance = renderedInstance;
@@ -26,22 +27,21 @@ export const BasicChart = ({ chartRef, data }) => {
         }
         chartInstance.setOption(options);
 
+
         chartInstance.on("click", function (params) {
             console.log("params：", params);
         });
-        window.addEventListener("resize", handleResize);
-        // console.log(chartRef.current)
     }
 
     const handleResize = () => {
+        console.log("resize")
         chartInstance.resize()
     };
 
     useEffect(() => {
-        // console.log("chart option updated", options);
+        console.log("chart option updated", data);
 
         let options = chartInitOpt
-        console.log(data)
         options.xAxis = {
             data: data.category
         }
@@ -50,9 +50,10 @@ export const BasicChart = ({ chartRef, data }) => {
         Object.keys(data.data).forEach(key => {
             series.push({
                 name: key,
-                type: 'bar',
+                type: 'line',
                 // stack: '总量',
                 // areaStyle: { normal: {} },
+                // smooth: false,
                 data: data.data[key]
             })
         })
@@ -75,7 +76,7 @@ export const BasicChart = ({ chartRef, data }) => {
 
     return (
         <div>
-            <div style={{ width: '100%', height: "300px" }} ref={chartRef} />
+            <div style={{ height: "250px" }} ref={chartRef} />
         </div>
     )
 }

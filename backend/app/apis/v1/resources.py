@@ -95,7 +95,7 @@ class BasicChart(Resource):
                 '视频广告': [111, 232, 201, 154, 190]
             }
 
-        # time.sleep(3)
+        time.sleep(random.randint(3, 5))
         return jsonify({
             'category': x_data,
             'data': data

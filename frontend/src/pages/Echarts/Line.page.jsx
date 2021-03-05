@@ -223,12 +223,12 @@ export const LineChartContainer = () => {
         <div>
             <Row gutter={[12, 12]}>
                 <Col span={12}>
-                    <Card size="small" title="Chart1" >
+                    <Card size="small" title="Chart1" style={{ height: "300px" }}>
                         <LineChart chartType='type2' />
                     </Card>
                 </Col>
                 <Col span={12}>
-                    <Card size="small" title="Chart2" >
+                    <Card size="small" title="Chart2" style={{ height: "300px" }}>
                         <LineChart chartType='type3' />
                     </Card>
                 </Col>
