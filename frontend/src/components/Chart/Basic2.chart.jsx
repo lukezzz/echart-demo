@@ -3,6 +3,10 @@ import * as echarts from "echarts";
 import {
     Spin
 } from 'antd'
+
+import { useFetch } from '../../data/testchart'
+
+
 const chartInitOpt = {
     grid: { top: 8, right: 8, bottom: 24, left: 50 },
     legend: {},
@@ -11,18 +15,25 @@ const chartInitOpt = {
     yAxis: {},
     series: []
 }
-export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => {
+
+
+export const BasicChart2 = ({ config, url }) => {
     // const [config, setConfig] = useState(chartInitOpt)
 
-    const [maxWidth, setMaxWidth] = useState('100vw')
+    const [loading, setLoading] = useState(true)
+
+    const chartRef = useRef()
 
     const { smooth } = config
+
+    const { data, isLoading, isError } = useFetch(url);
+    // if (isError) return <div>failed to load</div>;
 
 
     let chartInstance = null;
 
     const renderChart = (options) => {
-        console.log("chart render", chartRef.current.offsetWidth)
+        console.log("chart render", chartRef.current)
         const renderedInstance = echarts.getInstanceByDom(chartRef.current);
         if (renderedInstance) {
             chartInstance = renderedInstance;
@@ -37,6 +48,7 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
         //     chartInstance.hideLoading()
         //     chartInstance.setOption(options);
         // }
+        console.log('run reize at render', chartInstance.getWidth())
         handleResize()
         chartInstance.setOption(options)
 
@@ -48,12 +60,15 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
     }
 
     const handleResize = () => {
-        console.log("resize")
+        // console.log("resize")
         chartInstance.resize()
+        // setMaxWidth(chartInstance.getWidth())
+        console.log('after resize width:', chartInstance.getWidth())
     };
 
-    const configOption = options => {
+    const configOption = data => {
 
+        let options = chartInitOpt
         options.xAxis = {
             data: data.category
         }
@@ -71,21 +86,21 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
         })
 
         options.series = series
+        return options
     }
 
     useEffect(() => {
-        console.log("chart option updated", data);
 
         // if (chartInstance) {
         //     handleResize()
         // }
 
-        let options = chartInitOpt
-        if (!isLoading) {
-            configOption(options)
+        if (data) {
+            console.log("chart option updated", data);
+            const options = configOption(data)
+            renderChart(options);
         }
 
-        renderChart(options);
 
         return () => {
             console.log("chart disposed");
@@ -96,26 +111,31 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
 
     }, [data]);
 
-    useEffect(() => {
-        if (parentRef.current) {
-            console.log('parentRef div width', parentRef.current.offsetWidth)
-            // setMaxWidth(chartRef.current.offsetWidth)
-            console.log('load chart')
-            setMaxWidth(parentRef.current.offsetWidth)
-        }
-    }, [parentRef])
+
     // useEffect(() => {
-    //     // handleResize()
-    //     return () => {
-    //         console.log("chart disposed");
-    //         chartInstance && chartInstance.dispose();
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
+
+    //     console.log('update loading state')
+    //     setLoading(isLoading)
+    //     if (data) {
+    //         console.log("chart option updated", data);
+    //         const options = configOption(data)
+    //         renderChart(options);
+    //     }
+    // }, [isLoading])
+
+
 
     return (
-        <Spin spinning={isLoading} >
-            <div style={{ height: "250px", maxWidth: maxWidth }} ref={chartRef} />
-        </Spin>
+        <div>
+            {
+                isError ?
+                    <div>{isError.message}</div>
+                    :
+                    <Spin spinning={isLoading} >
+                        <div style={{ height: "300px", maxWidth: "100%" }} ref={chartRef} />
+                    </Spin>
+
+            }
+        </div>
     )
 }

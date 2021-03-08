@@ -5,16 +5,14 @@ import { useFetch } from '../../data/testchart'
 import {
     Spin
 } from 'antd'
-export const LineChart = ({ config }) => {
-
-    const chartRef = useRef(null);
+export const LineChart = ({ parentRef, chartRef, config }) => {
 
     const { data, isLoading, isError } = useFetch('line');
     if (isError) return <div>failed to load</div>;
     // if (isLoading) return <Spin spinning />;
-    console.log(isLoading)
+    // console.log("loading state: ", isLoading)
 
     return (
-        <BasicChart chartRef={chartRef} data={data} config={config} isLoading={isLoading} />
+        <BasicChart parentRef={parentRef} chartRef={chartRef} data={data} config={config} isLoading={isLoading} />
     )
 }

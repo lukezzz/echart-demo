@@ -2,6 +2,8 @@ import {
     LineChartOutlined,
     BgColorsOutlined,
     DashboardOutlined,
+    LayoutOutlined,
+    TableOutlined
 } from '@ant-design/icons'
 
 const routeData = [
@@ -22,6 +24,26 @@ const routeData = [
                 title: 'Line',
                 exact: false,
                 icon: <LineChartOutlined />,
+            }
+        ]
+    },
+    {
+        name: 'layout',
+        key: 4,
+        path: '/layout',
+        authority: [''],
+        title: 'Layout',
+        exact: false,
+        icon: <LayoutOutlined />,
+        sub: [
+            {
+                name: 'grid',
+                key: 5,
+                path: '/layout/grid',
+                authority: [''],
+                title: 'Demo',
+                exact: false,
+                icon: <TableOutlined />,
             }
         ]
     },

@@ -84,32 +84,33 @@ axiosInstance.interceptors.response.use(response => {
             }
         }
 
-        if (err.response.status === 500) {
+        // if (err.response.status === 500) {
 
-        }
+        // }
 
-        if (err.response.status === 422) {
+        // if (err.response.status === 422) {
 
-        }
+        // }
 
-        if (err.response.status === 404) {
-            switch (err.response.statusText) {
-                case 'NOT FOUND':
-                    break;
+        // if (err.response.status === 404) {
+        //     switch (err.response.statusText) {
+        //         case 'NOT FOUND':
+        //             break;
 
-                default:
-                    break;
-            }
+        //         default:
+        //             break;
+        //     }
 
-        }
+        // }
 
-        if (err.response.status === 400 || err.response.status === 403) {
-            const { request } = err.response
-            let errorMsg = request.response
-            throw JSON.parse(errorMsg)
-        }
+        // if (err.response.status === 400 || err.response.status === 403) {
+        //     const { request } = err.response
+        //     let errorMsg = request.response
+        //     throw JSON.parse(errorMsg)
+        // }
+        throw new Error("An error has occurred!");
 
-        return Promise.reject(err);
+        // return Promise.reject(err);
     });
 });
 

@@ -58,14 +58,14 @@ def random_x_data():
         3: ['周一', '周二', '周三', '周四', '周五'],
         4: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     }
-    return temp_list[random.randint(1, 4)]
+    return temp_list[random.randint(1, 1)]
 
 def random_category():
     temp_list = {
         1: ['邮件营销', '联盟广告', '视频广告'],
         2: ['销量'],
     }
-    return temp_list[random.randint(1, 2)]
+    return temp_list[random.randint(1, 1)]
 
 def random_data(x_data, category):
     d_length = len(x_data)
@@ -76,9 +76,18 @@ def random_data(x_data, category):
 
     return data
 
+def fixed_data(x_data, category):
+    d_length = len(x_data)
+    data = {}
+    
+    for i in category:
+        data[i] = list(range(11, 17))
+
+    return data
+
 class LineChart(Resource):
 
-    def get(self):
+    def get(self, chartType):
 
         # xAxis data
         x_data = random_x_data()
@@ -87,10 +96,10 @@ class LineChart(Resource):
         data = random_data(x_data, category)
         
         # time.sleep(random.randint(0, 2))
-        time.sleep(3)
+        # time.sleep(3)
         return line_schema(x_data, data)
 
 # index
 api_v1.add_resource(Index, '/')
 api_v1.add_resource(HealthCheck, '/hc')
-api_v1.add_resource(LineChart, '/chart/line')
+api_v1.add_resource(LineChart, '/chart/line/<string:chartType>')

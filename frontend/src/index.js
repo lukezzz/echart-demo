@@ -7,7 +7,6 @@ import './translations/i18n';
 import LocaleProvider from './providers/config/Locale.provider'
 
 
-
 ReactDOM.render(
     <BrowserRouter>
         <LocaleProvider>

@@ -27,20 +27,19 @@ export const MainLayout = props => {
                     </Col>
                 </Row>
             </Header>
-            <Layout>
-                <SideMenu />
-                <Layout
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column'
-                    }}
-                >
-
-                    <Content style={{ marginTop: 24 }}>
-                        {children}
-                    </Content>
-                </Layout>
+            {/* <Layout > */}
+            {/* <SideMenu /> */}
+            <Layout
+            // style={{
+            //     display: 'flex',
+            //     flexDirection: 'column'
+            // }}
+            >
+                <Content style={{ marginTop: 24, width: '100vw' }}>
+                    {children}
+                </Content>
             </Layout>
+            {/* </Layout> */}
             <MainFooter />
         </Layout>
     )
