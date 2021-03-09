@@ -5,14 +5,17 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import './translations/i18n';
 import LocaleProvider from './providers/config/Locale.provider'
+import ThemeProvider from './providers/config/Theme.provider'
 
 
 ReactDOM.render(
-    <BrowserRouter>
-        <LocaleProvider>
-            <App />
-        </LocaleProvider>
-    </BrowserRouter>,
+    <ThemeProvider>
+        <BrowserRouter>
+            <LocaleProvider>
+                <App />
+            </LocaleProvider>
+        </BrowserRouter>
+    </ThemeProvider>,
     document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

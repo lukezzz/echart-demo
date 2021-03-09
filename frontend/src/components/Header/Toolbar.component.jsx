@@ -13,31 +13,9 @@ import { LocaleContext } from '../../providers/config/Locale.provider'
 import enUS from 'antd/lib/locale/en_US';
 import zhCN from 'antd/lib/locale/zh_CN';
 
-const ThemeMenu = () => {
+import { ThemeContext } from '../../providers/config/Theme.provider'
 
 
-  const onLight = async () => {
-    await window.less.modifyVars(light);
-    await window.less.modifyVars({
-      '@layout-header-background': '#fafafa',
-      '@layout-slider-background': '#f0f0f0',
-      '@menu-bg': '@component-background',
-      '@btn-primary-bg': '@primary-color',
-      '@checkbox-color': '@primary-color',
-    })
-  };
-  const onDark = async () => {
-    await window.less.modifyVars(dark);
-  };
-
-
-  return (
-    <Menu selectedKeys={[]}>
-      <Menu.Item key="light" onClick={onLight}>light</Menu.Item>
-      <Menu.Item key="dark" onClick={onDark}>dark</Menu.Item>
-    </Menu>
-  )
-}
 
 
 
@@ -48,6 +26,8 @@ const Toolbar = () => {
   const { t } = useTranslation();
 
   const { changeLocale } = useContext(LocaleContext)
+  const { changeTheme } = useContext(ThemeContext)
+
 
   const changeLan = e => {
     i18n.changeLanguage(e.key)
@@ -73,6 +53,34 @@ const Toolbar = () => {
       </Menu>
     )
   }
+
+  const ThemeMenu = () => {
+
+    const onLight = async () => {
+      await window.less.modifyVars(light);
+      await window.less.modifyVars({
+        '@layout-header-background': '#fafafa',
+        '@layout-slider-background': '#f0f0f0',
+        '@menu-bg': '@component-background',
+        '@btn-primary-bg': '@primary-color',
+        '@checkbox-color': '@primary-color',
+      })
+      await changeTheme('light')
+    };
+    const onDark = async () => {
+      await window.less.modifyVars(dark);
+      await changeTheme('dark')
+    };
+
+
+    return (
+      <Menu selectedKeys={[]}>
+        <Menu.Item key="light" onClick={onLight}>light</Menu.Item>
+        <Menu.Item key="dark" onClick={onDark}>dark</Menu.Item>
+      </Menu>
+    )
+  }
+
 
   return (
     <Space>

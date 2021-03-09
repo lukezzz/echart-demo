@@ -3,7 +3,7 @@ import { fetcher } from '../config/fetcher'
 
 
 export const useFetch = (url) => {
-    const { data, error } = useSWR(`/chart/line/${url}`, fetcher);
+    const { data, error } = useSWR(`${url}`, fetcher);
 
     return {
         data: data,

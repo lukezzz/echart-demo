@@ -1,8 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import * as echarts from "echarts";
 import {
     Spin
 } from 'antd'
+
+import { useFetch } from '../../data/testchart'
+import { theme_sec } from '../../config/echart_theme'
+
+import { ThemeContext } from '../../providers/config/Theme.provider'
+
 const chartInitOpt = {
     grid: { top: 8, right: 8, bottom: 24, left: 50 },
     legend: {},
@@ -11,23 +17,32 @@ const chartInitOpt = {
     yAxis: {},
     series: []
 }
-export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => {
+
+
+export const BasicChart = ({ config, url, dataset }) => {
     // const [config, setConfig] = useState(chartInitOpt)
 
-    const [maxWidth, setMaxWidth] = useState('100vw')
+    const { theme } = useContext(ThemeContext)
+
+    const [loading, setLoading] = useState(true)
+
+    const chartRef = useRef()
 
     const { smooth } = config
+
+    const { data, isLoading, isError } = useFetch(url);
+    // if (isError) return <div>failed to load</div>;
 
 
     let chartInstance = null;
 
     const renderChart = (options) => {
-        console.log("chart render", chartRef.current.offsetWidth)
+        console.log("chart render", chartRef.current)
         const renderedInstance = echarts.getInstanceByDom(chartRef.current);
         if (renderedInstance) {
             chartInstance = renderedInstance;
         } else {
-            chartInstance = echarts.init(chartRef.current);
+            chartInstance = echarts.init(chartRef.current, theme === 'dark' ? theme_sec : null);
             window.addEventListener("resize", handleResize);
 
         }
@@ -37,6 +52,7 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
         //     chartInstance.hideLoading()
         //     chartInstance.setOption(options);
         // }
+        console.log('run reize at render', chartInstance.getWidth())
         handleResize()
         chartInstance.setOption(options)
 
@@ -48,12 +64,15 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
     }
 
     const handleResize = () => {
-        console.log("resize")
+        // console.log("resize")
         chartInstance.resize()
+        // setMaxWidth(chartInstance.getWidth())
+        console.log('after resize width:', chartInstance.getWidth())
     };
 
-    const configOption = options => {
+    const configOption = data => {
 
+        let options = chartInitOpt
         options.xAxis = {
             data: data.category
         }
@@ -71,21 +90,80 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
         })
 
         options.series = series
+        return options
+    }
+
+    const configOptionWithDataset = data => {
+
+        let options = chartInitOpt
+
+        options.dataset = [{
+            id: 'dataset_raw',
+            source: data
+        }]
+
+        options.dataset = options.dataset.concat(dataset)
+
+        console.log(options.dataset)
+
+        options.title = {
+            text: 'Income of Germany and France since 1950'
+        }
+
+        options.tooltip = {
+            trigger: 'axis'
+        }
+
+        options.xAxis = {
+            type: 'category',
+            nameLocation: 'middle'
+        }
+
+        options.series = [{
+            type: 'line',
+            datasetId: 'dataset_since_1950_of_germany',
+            showSymbol: false,
+            encode: {
+                x: 'Year',
+                y: 'Income',
+                itemName: 'Year',
+                tooltip: ['Income'],
+            }
+        }, {
+            type: 'line',
+            datasetId: 'dataset_since_1950_of_france',
+            showSymbol: false,
+            encode: {
+                x: 'Year',
+                y: 'Income',
+                itemName: 'Year',
+                tooltip: ['Income'],
+            }
+        }]
+        return options
     }
 
     useEffect(() => {
-        console.log("chart option updated", data);
 
         // if (chartInstance) {
         //     handleResize()
         // }
 
-        let options = chartInitOpt
-        if (!isLoading) {
-            configOption(options)
+        if (data) {
+            console.log("chart option/theme updated", data);
+            let options = chartInitOpt
+            if (dataset) {
+                console.log(dataset)
+                options = configOptionWithDataset(data)
+            } else {
+                options = configOption(data)
+            }
+            // if (chartInstance) {
+            //     chartInstance.dispose();
+            // }
+            renderChart(options);
         }
 
-        renderChart(options);
 
         return () => {
             console.log("chart disposed");
@@ -94,28 +172,20 @@ export const BasicChart = ({ parentRef, chartRef, data, config, isLoading }) => 
         }
 
 
-    }, [data]);
+    }, [data, theme]);
 
-    useEffect(() => {
-        if (parentRef.current) {
-            console.log('parentRef div width', parentRef.current.offsetWidth)
-            // setMaxWidth(chartRef.current.offsetWidth)
-            console.log('load chart')
-            setMaxWidth(parentRef.current.offsetWidth)
-        }
-    }, [parentRef])
-    // useEffect(() => {
-    //     // handleResize()
-    //     return () => {
-    //         console.log("chart disposed");
-    //         chartInstance && chartInstance.dispose();
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
 
     return (
-        <Spin spinning={isLoading} >
-            <div style={{ height: "250px", maxWidth: maxWidth }} ref={chartRef} />
-        </Spin>
+        <div>
+            {
+                isError ?
+                    <div>{isError.message}</div>
+                    :
+                    <Spin spinning={isLoading} >
+                        <div style={{ height: "300px", maxWidth: "100%" }} ref={chartRef} />
+                    </Spin>
+
+            }
+        </div>
     )
 }

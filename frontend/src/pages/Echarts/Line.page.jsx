@@ -6,7 +6,7 @@ import {
 import React, { useRef, useState, useEffect } from 'react'
 
 // import { LineChart } from '../../components/Chart/Line.chart'
-import { BasicChart2 } from '../../components/Chart/Basic2.chart'
+import { BasicChart } from '../../components/Chart/Basic.chart'
 
 import { useTranslation } from 'react-i18next';
 import '../Pages.style.scss'
@@ -18,15 +18,16 @@ export const LineChartContainer = () => {
     return (
 
         <div>
-            <Row justify="space-between">
+            <Row justify="space-between" gutter={[12, 12]}>
                 <Col span={12}>
                     <Card
                         size="small"
                         title={t('Basic Line Chart')}
+                        hoverable
                     // bodyStyle={{ maxWidth: 500 }}
                     // className='chart-card'
                     >
-                        <BasicChart2 config={{ smooth: false }} url="type1" />
+                        <BasicChart config={{ smooth: false }} url='/chart/basic/type1' />
 
                     </Card>
                 </Col>
@@ -34,10 +35,51 @@ export const LineChartContainer = () => {
                     <Card
                         size="small"
                         title={t('Smoothed Line Chart')}
+                        hoverable
                     // bodyStyle={{ maxWidth: 500 }}
                     // className='chart-card'
                     >
-                        <BasicChart2 config={{ smooth: true }} url="type2" />
+                        <BasicChart config={{ smooth: true }} url="/chart/basic/type2" />
+
+                    </Card>
+                </Col>
+                <Col span={12} >
+                    <Card
+                        size="small"
+                        title={t('Data set and transform')}
+                        hoverable
+                    >
+                        <BasicChart
+                            config={{ smooth: true }}
+                            url="/chart/basic/type3"
+                            dataset={
+                                [{
+                                    id: 'dataset_since_1950_of_germany',
+                                    fromDatasetId: 'dataset_raw',
+                                    transform: {
+                                        type: 'filter',
+                                        config: {
+                                            and: [
+                                                { dimension: 'Year', gte: 1950 },
+                                                { dimension: 'Country', '=': 'Germany' }
+                                            ]
+                                        }
+                                    }
+                                }, {
+                                    id: 'dataset_since_1950_of_france',
+                                    fromDatasetId: 'dataset_raw',
+                                    transform: {
+                                        type: 'filter',
+                                        config: {
+                                            and: [
+                                                { dimension: 'Year', gte: 1950 },
+                                                { dimension: 'Country', '=': 'France' }
+                                            ]
+                                        }
+                                    }
+                                }]
+                            }
+                        />
 
                     </Card>
                 </Col>

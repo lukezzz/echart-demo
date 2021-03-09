@@ -7,6 +7,7 @@ from app.apis.v1.schemas import *
 import time
 from datetime import datetime, timedelta
 import random
+import requests
 
 
 class Index(Resource):
@@ -85,9 +86,35 @@ def fixed_data(x_data, category):
 
     return data
 
-class LineChart(Resource):
+def basic_type1():
+    x_data = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    category = ['value']
+    return line_schema(x_data, random_data(x_data, category))
+
+def basic_type2():
+    x_data = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    category = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+    return line_schema(x_data, random_data(x_data, category))
+
+def basic_type3():
+    # return dataset
+    res = requests.get(url='https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples/data/asset/data/life-expectancy-table.json')
+    data = res.json()
+    return data
+
+class BasicChart(Resource):
 
     def get(self, chartType):
+
+
+        if chartType == 'type1':
+            return basic_type1()
+
+        if chartType == 'type2':
+            return basic_type2()
+
+        if chartType == 'type3':
+            return basic_type3()
 
         # xAxis data
         x_data = random_x_data()
@@ -102,4 +129,4 @@ class LineChart(Resource):
 # index
 api_v1.add_resource(Index, '/')
 api_v1.add_resource(HealthCheck, '/hc')
-api_v1.add_resource(LineChart, '/chart/line/<string:chartType>')
+api_v1.add_resource(BasicChart, '/chart/basic/<string:chartType>')
