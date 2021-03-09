@@ -1,55 +1,101 @@
 import {
     Row,
     Col,
-    Card,
+    Modal,
 } from 'antd'
 import React, { useRef, useState, useEffect } from 'react'
 
 // import { LineChart } from '../../components/Chart/Line.chart'
-import { BasicChart } from '../../components/Chart/Basic.chart'
+import { BasicChart, BasicChartWithDataSet } from '../../components/Chart/Basic.chart'
 
-import { useTranslation } from 'react-i18next';
 import '../Pages.style.scss'
+
+import { ChartCard } from '../../components/Chart/Chart.card'
+
+const option1 = {
+    grid: { top: 35, right: 8, bottom: 24, left: 50 },
+    title: {
+        text: 'Basic Line Chart',
+        left: 'center'
+
+    },
+    xAxis: {
+        type: 'value',
+    },
+    yAxis: {
+        type: 'value'
+    },
+    chartType: {
+        colType: 'line',
+        smooth: false,
+    },
+    url: '/chart/basic/type1',
+
+}
+
+const option2 = {
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    title: {
+        text: 'Smoothed Line Chart',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    toolbox: {
+        feature: {
+            magicType: { show: true, type: ['stack', 'tiled'] },
+            saveAsImage: { show: true }
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+    },
+    yAxis: {
+        type: 'value'
+    },
+    chartType: {
+        colType: 'line',
+        smooth: true,
+    },
+    url: '/chart/basic/type2',
+
+}
+
 
 export const LineChartContainer = () => {
 
-    const { t } = useTranslation();
 
     return (
 
-        <div>
-            <Row justify="space-between" gutter={[12, 12]}>
+        <div style={{ padding: 20 }}>
+            <Row justify="space-around" gutter={[12, 12]}>
                 <Col span={12}>
-                    <Card
-                        size="small"
-                        title={t('Basic Line Chart')}
-                        hoverable
-                    // bodyStyle={{ maxWidth: 500 }}
-                    // className='chart-card'
+                    <ChartCard
+                        options={option1}
                     >
-                        <BasicChart config={{ smooth: false }} url='/chart/basic/type1' />
-
-                    </Card>
+                    </ChartCard>
                 </Col>
-                <Col span={12} >
-                    <Card
-                        size="small"
-                        title={t('Smoothed Line Chart')}
-                        hoverable
-                    // bodyStyle={{ maxWidth: 500 }}
-                    // className='chart-card'
-                    >
-                        <BasicChart config={{ smooth: true }} url="/chart/basic/type2" />
 
-                    </Card>
-                </Col>
                 <Col span={12} >
-                    <Card
-                        size="small"
-                        title={t('Data set and transform')}
+                    <ChartCard
+                        options={option2}
+                    >
+                    </ChartCard>
+                </Col>
+
+                {/* <Col span={12} >
+                    <ChartCard
+                        title='Data set and transform'
                         hoverable
                     >
-                        <BasicChart
+                        <BasicChartWithDataSet
                             config={{ smooth: true }}
                             url="/chart/basic/type3"
                             dataset={
@@ -81,10 +127,9 @@ export const LineChartContainer = () => {
                             }
                         />
 
-                    </Card>
-                </Col>
+                    </ChartCard>
+                </Col> */}
             </Row>
-
         </div>
     )
 }

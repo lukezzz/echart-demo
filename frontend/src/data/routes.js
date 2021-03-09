@@ -17,11 +17,11 @@ const routeData = [
         icon: <DashboardOutlined />,
         sub: [
             {
-                name: 'line',
+                name: 'basic',
                 key: 3,
-                path: '/echart/line',
+                path: '/echart/basic',
                 authority: [''],
-                title: 'Line',
+                title: 'Demo',
                 exact: false,
                 icon: <LineChartOutlined />,
             }

@@ -15,7 +15,7 @@ const loadComponent = name => {
   switch (name) {
     case 'home':
       return <Home />
-    case 'line':
+    case 'basic':
       return <LineChartContainer />
     case 'grid':
       return <GridContainer />

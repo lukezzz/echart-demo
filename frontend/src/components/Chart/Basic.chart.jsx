@@ -19,12 +19,133 @@ const chartInitOpt = {
 }
 
 
-export const BasicChart = ({ config, url, dataset }) => {
+export const BasicChart = ({ config }) => {
+    // const [config, setConfig] = useState(chartInitOpt)
+
+
+    const { theme } = useContext(ThemeContext)
+    const chartRef = useRef()
+    const { url } = config
+
+    const { data, isLoading, isError } = useFetch(url);
+
+    // if (isError) return <div>failed to load</div>;
+
+    let chartInstance = null;
+
+    const renderChart = (options) => {
+        console.log("chart render", chartRef.current)
+        const renderedInstance = echarts.getInstanceByDom(chartRef.current);
+        if (renderedInstance) {
+            chartInstance = renderedInstance;
+        } else {
+            chartInstance = echarts.init(chartRef.current, theme === 'dark' ? theme_sec : null);
+            window.addEventListener("resize", handleResize);
+
+        }
+        // if (isLoading) {
+        //     chartInstance.showLoading()
+        // } else {
+        //     chartInstance.hideLoading()
+        //     chartInstance.setOption(options);
+        // }
+        console.log('run reize at render', chartInstance.getWidth())
+        handleResize()
+        chartInstance.setOption(options)
+
+
+        chartInstance.on("click", function (params) {
+            console.log("params：", params);
+        });
+
+    }
+
+    const handleResize = () => {
+        // console.log("resize")
+        chartInstance.resize()
+        // setMaxWidth(chartInstance.getWidth())
+        console.log('after resize width:', chartInstance.getWidth())
+    };
+
+    const configOption = (options, data) => {
+
+        options.xAxis = {
+            data: data.category
+        }
+
+        let series = []
+        let smooth = config.chartType.smooth
+        let colType = config.chartType.colType
+        console.log(colType)
+        Object.keys(data.data).forEach(key => {
+            series.push({
+                name: key,
+                type: colType,
+                smooth: smooth,
+                // stack: '总量',
+                // areaStyle: { normal: {} },
+                data: data.data[key]
+            })
+        })
+
+        options.series = series
+        return options
+    }
+
+
+    useEffect(() => {
+
+        // if (chartInstance) {
+        //     handleResize()
+        // }
+
+        let options = config
+        if (data) {
+            console.log("chart option/theme updated", data);
+
+            options = configOption(options, data)
+            // if (chartInstance) {
+            //     chartInstance.dispose();
+            // }
+
+            console.log('render options:', options)
+            renderChart(options);
+        }
+
+
+        return () => {
+            console.log("chart disposed");
+            chartInstance && chartInstance.dispose();
+            window.removeEventListener("resize", handleResize);
+        }
+
+
+    }, [config, data, theme]);
+
+
+
+
+
+    return (
+        <div>
+            {
+                isError ?
+                    <div>{isError.message}</div>
+                    :
+                    <Spin spinning={isLoading} >
+                        <div style={{ height: "300px", maxWidth: "100%" }} ref={chartRef} />
+                    </Spin>
+
+            }
+        </div>
+    )
+}
+
+
+export const BasicChartWithDataSet = ({ config, url, dataset }) => {
     // const [config, setConfig] = useState(chartInitOpt)
 
     const { theme } = useContext(ThemeContext)
-
-    const [loading, setLoading] = useState(true)
 
     const chartRef = useRef()
 
@@ -69,29 +190,6 @@ export const BasicChart = ({ config, url, dataset }) => {
         // setMaxWidth(chartInstance.getWidth())
         console.log('after resize width:', chartInstance.getWidth())
     };
-
-    const configOption = data => {
-
-        let options = chartInitOpt
-        options.xAxis = {
-            data: data.category
-        }
-
-        let series = []
-        Object.keys(data.data).forEach(key => {
-            series.push({
-                name: key,
-                type: 'line',
-                // stack: '总量',
-                // areaStyle: { normal: {} },
-                smooth: smooth,
-                data: data.data[key]
-            })
-        })
-
-        options.series = series
-        return options
-    }
 
     const configOptionWithDataset = data => {
 
@@ -152,12 +250,7 @@ export const BasicChart = ({ config, url, dataset }) => {
         if (data) {
             console.log("chart option/theme updated", data);
             let options = chartInitOpt
-            if (dataset) {
-                console.log(dataset)
-                options = configOptionWithDataset(data)
-            } else {
-                options = configOption(data)
-            }
+            options = configOptionWithDataset(data)
             // if (chartInstance) {
             //     chartInstance.dispose();
             // }
