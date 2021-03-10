@@ -1,7 +1,5 @@
 import React, { createContext, useState } from 'react'
-import enUS from 'antd/lib/locale/en_US';
-import i18n from '../../translations/i18n'
-import zhCN from 'antd/lib/locale/zh_CN';
+
 
 export const ThemeContext = createContext({
 

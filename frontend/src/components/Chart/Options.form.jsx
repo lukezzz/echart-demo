@@ -1,5 +1,4 @@
-import { Form, Row, Col, Switch, Select, Input, Button, Space } from 'antd';
-import { SeriesModel } from 'echarts';
+import { Form, Row, Col, Switch, Select, Input, Button } from 'antd';
 
 
 const { Option } = Select;
@@ -62,8 +61,8 @@ export const OptionsForm = ({ options, updateOption }) => {
                             label="类型"
                         >
                             <Select>
-                                <Select.Option value="line">line</Select.Option>
-                                <Select.Option value="bar">bar</Select.Option>
+                                <Option value="line">line</Option>
+                                <Option value="bar">bar</Option>
                             </Select>
                         </Form.Item>
                     </Col>

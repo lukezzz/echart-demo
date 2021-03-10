@@ -1,6 +1,5 @@
 import { Menu } from 'antd';
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import routeData from '../../data/routes'
 
 const { SubMenu } = Menu;
@@ -10,24 +9,6 @@ export const HeaderMenu = () => {
 
 
     // active currrent menu
-    const location = useLocation()
-    const [curKey, setCurKey] = useState([1])
-
-
-    useEffect(() => {
-
-        let curMenuItem = routeData.find(item => item.path === location.pathname)
-        if (curMenuItem) {
-            setCurKey([curMenuItem.id])
-        }
-
-    }, [location.pathname])
-
-
-    const onSelect = key => {
-        // console.log(key.selectedKeys)
-        setCurKey(key.selectedKeys)
-    }
 
 
     return (

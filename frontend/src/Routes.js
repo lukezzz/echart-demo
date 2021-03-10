@@ -1,13 +1,12 @@
-import Grid from 'antd/lib/card/Grid';
 import React from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import routeData from './data/routes'
 import SecurityLayout from './layouts/SecurityLayout';
 
 
 import {
   Home,
-  LineChartContainer,
+  BasicChartContainer,
   GridContainer
 } from './pages';
 
@@ -16,7 +15,7 @@ const loadComponent = name => {
     case 'home':
       return <Home />
     case 'basic':
-      return <LineChartContainer />
+      return <BasicChartContainer />
     case 'grid':
       return <GridContainer />
 
