@@ -18,10 +18,30 @@ const routeData = [
         sub: [
             {
                 name: 'basic',
-                key: 3,
+                key: 2.1,
                 path: '/echart/basic',
                 authority: [''],
                 title: 'Demo',
+                exact: false,
+                icon: <LineChartOutlined />,
+            }
+        ]
+    },
+    {
+        name: 'topology',
+        key: 3,
+        path: '/topo',
+        authority: [''],
+        title: 'Topology',
+        exact: false,
+        icon: <DashboardOutlined />,
+        sub: [
+            {
+                name: 'next',
+                key: 3.1,
+                path: '/topo/next',
+                authority: [''],
+                title: 'Next',
                 exact: false,
                 icon: <LineChartOutlined />,
             }

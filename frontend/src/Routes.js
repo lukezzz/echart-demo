@@ -8,7 +8,8 @@ import SecurityLayout from './layouts/SecurityLayout';
 import {
   Home,
   LineChartContainer,
-  GridContainer
+  GridContainer,
+  NextContainer
 } from './pages';
 
 const loadComponent = name => {
@@ -19,6 +20,8 @@ const loadComponent = name => {
       return <LineChartContainer />
     case 'grid':
       return <GridContainer />
+    case 'next':
+      return <NextContainer />
 
     default:
       return <Home />
