@@ -14,7 +14,9 @@ const topoData = {
         { "id": 2, "x": 660, "y": 280, "name": "server", "icon": "server" },
         { "id": 3, "x": 660, "y": 100, "name": "host", "icon": "host" },
         { "id": 4, "x": 141, "y": 190, "name": "cloud", "icon": "cloud" },
-        { "id": 5, "x": 542, "y": -58, "name": "baidu1", "icon": "baidu" }
+        { "id": 5, "x": 444, "y": -58, "name": "F5", "icon": "f5" },
+        { "id": 6, "x": 333, "y": -58, "name": "baidu", "icon": "baidu" },
+        { "id": 7, "x": 521, "y": -88, "name": "ElasticSearch", "icon": "elasticsearch" },
     ],
     links: [
         { "source": 0, "target": 1, id: 1 },
@@ -77,6 +79,8 @@ export const NextContainer = () => {
         ready: (sender, event) => {
             //register icon to instance
             sender.registerIcon("baidu", "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png", 80, 32);
+            sender.registerIcon("f5", `${window.location.origin}/f5-logo-rgb.png`, 45, 45);
+            sender.registerIcon("elasticsearch", `${window.location.origin}/logo-elastic-search-color-64.svg`, 45, 45);
             sender.setData(topoData)
             // add custom icon
             // window.nx.define('Base.Icon', window.nx.ui.Component, {
