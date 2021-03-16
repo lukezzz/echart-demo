@@ -2,15 +2,14 @@ import {
     Card,
     Button
 } from 'antd'
-import React, { useRef, useState, useEffect, memo } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import _ from "lodash"
-import RGL, { WidthProvider } from "react-grid-layout";
+import { WidthProvider } from "react-grid-layout";
 import { Responsive } from 'react-grid-layout';
 
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 
-import { useTranslation } from 'react-i18next';
 // import { BasicChart2 } from '../../components/Chart/Basic2.chart'
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -139,20 +138,20 @@ const Grid = () => {
                                         <p>This card is static and cannot be removed or resized</p>
                                     </Card>
                                 ) : (
-                                        <Card
-                                            hoverable={true}
-                                            // title='This card can be dragged and resize'
-                                            style={{ height: '100%', width: '100%' }}
-                                            bodyStyle={{ background: "#95e0c1", height: '100%', width: '100%' }}
+                                    <Card
+                                        hoverable={true}
+                                        // title='This card can be dragged and resize'
+                                        style={{ height: '100%', width: '100%' }}
+                                        bodyStyle={{ background: "#95e0c1", height: '100%', width: '100%' }}
 
 
-                                        >
-                                            <p>
-                                                {i}
-                                            </p>
-                                            <p>This card can be dragged and resize</p>
-                                        </Card>
-                                    )}
+                                    >
+                                        <p>
+                                            {i}
+                                        </p>
+                                        <p>This card can be dragged and resize</p>
+                                    </Card>
+                                )}
                             </div>
                         )
                     })
